@@ -22,4 +22,6 @@
     <string name="authTokenKey">authTokenKey</string>
     <string name="userIdKey">userIdKey</string>
     <string name="tokenTypeKey">tokenTypeKey</string>
+    <string name="sleepGoalHoursKey">sleepGoalHoursKey</string>
+    <string name="sleepGoalMinutesKey">sleepGoalMinutesKey</string>
 </resources>

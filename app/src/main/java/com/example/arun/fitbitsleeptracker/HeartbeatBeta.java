@@ -79,4 +79,9 @@ public class HeartbeatBeta extends AppCompatActivity implements FitbitResponse {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void processFinished(int sleepSum, int daysToCheck) {
+
+    }
 }

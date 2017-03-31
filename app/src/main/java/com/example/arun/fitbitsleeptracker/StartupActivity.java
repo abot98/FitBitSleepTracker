@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ public class StartupActivity extends AppCompatActivity {
                 login(true); //Force a login
             }
             else {
-                Intent intent = new Intent(this, SleepTracker.class);
+                Intent intent = new Intent(this, SleepTrackerGUI.class);
                 startActivity(intent);
             }
             finish();
