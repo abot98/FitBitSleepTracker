@@ -46,7 +46,7 @@ public class HeartbeatBeta extends AppCompatActivity implements FitbitResponse {
         //Send request
         request = new FitbitHeartbeatRequest();
         request.delegate = this;
-        request.execute(userId, authToken, tokenType, "2017-02-02");
+        request.execute(userId, authToken, tokenType, "2017-02-25");
         //System.out.print("Eat dat bussy like groceries");
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.frame);
 

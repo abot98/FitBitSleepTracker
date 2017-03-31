@@ -1,8 +1,11 @@
 package com.example.arun.fitbitsleeptracker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +20,7 @@ import android.widget.TimePicker;
 
 import org.json.JSONObject;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -36,6 +40,7 @@ public class SleepTracker extends AppCompatActivity implements FitbitResponse {
     private FitbitSleepRequest request;
     private int daysToCheck, sleepGoalHours, sleepGoalMinutes;
     private int sleepSum;
+    private SharedPreferences preferences;
 
     @Override
     //Creates the sleep tracking display, checks login, and gets data returned from login sit
@@ -43,6 +48,9 @@ public class SleepTracker extends AppCompatActivity implements FitbitResponse {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Before doing anything, check if this is the first time the user has logged in
+        preferences = this.getSharedPreferences(getString(R.string.preferencesKey), Context.MODE_PRIVATE);
 
         checkGoalBtn = (Button) findViewById(R.id.checkGoalBtn);
         goalOutput = (TextView) findViewById(R.id.goalOutput);
@@ -64,14 +72,28 @@ public class SleepTracker extends AppCompatActivity implements FitbitResponse {
         toolbar.setTitle("Sleep Tracking");
         setSupportActionBar(toolbar);
 
-        Uri data = this.getIntent().getData();
-        if (data != null && data.isHierarchical()) {
-            String uri = this.getIntent().getDataString();
-            Log.i("DebugMsg", "222 Deep link clicked " + uri);
-            hasTokenInfo = collectData(uri);
-        }
+        //Try to get tokens
+        authToken = preferences.getString(getString(R.string.authTokenKey), null);
+        userId = preferences.getString(getString(R.string.userIdKey), null);
+        tokenType = preferences.getString(getString(R.string.tokenTypeKey), null);
 
-        if(!hasTokenInfo) goalOutput.setText("Login Failed");
+        if(authToken == null || userId == null || tokenType == null) {
+            Uri data = this.getIntent().getData();
+            if (data != null && data.isHierarchical()) {
+                String uri = this.getIntent().getDataString();
+                Log.i("DebugMsg", "222 Deep link clicked " + uri);
+                hasTokenInfo = collectData(uri);
+            }
+        }
+        else hasTokenInfo = true;
+
+        if(!hasTokenInfo) {
+            Intent intent = new Intent(this, StartupActivity.class);
+            intent.putExtra("forceLogin", true);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         checkGoalBtn.setOnClickListener(new View.OnClickListener() {
            public void onClick(View v) {
@@ -90,12 +112,6 @@ public class SleepTracker extends AppCompatActivity implements FitbitResponse {
                }
            }
         });
-
-//        Intent intent = new Intent(this, HeartbeatBeta.class);
-//        intent.putExtra("authToken", authToken);
-//        intent.putExtra("userId", userId);
-//        intent.putExtra("tokenType", tokenType);
-//        startActivity(intent);
     }
 
     //Extracts data from the URI used to call this activity
@@ -113,6 +129,14 @@ public class SleepTracker extends AppCompatActivity implements FitbitResponse {
         Log.i("DebugMsg", "Token: " + authToken);
         Log.i("Output", "User ID: " + userId);
         Log.i("DebugMsg", "Token Type: " + tokenType);
+
+        //Save the tokens to preferences
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(getString(R.string.authTokenKey), authToken);
+        editor.putString(getString(R.string.userIdKey), userId);
+        editor.putString(getString(R.string.tokenTypeKey), tokenType);
+        editor.commit();
+
         return true;
     }
 
@@ -231,7 +255,6 @@ public class SleepTracker extends AppCompatActivity implements FitbitResponse {
             case R.id.action_logout:
                 //Start a startup activity which forces the user to login again
                 intent = new Intent(this, StartupActivity.class);
-                Bundle b = new Bundle();
                 intent.putExtra("forceLogin", true);
                 startActivity(intent);
                 finish();

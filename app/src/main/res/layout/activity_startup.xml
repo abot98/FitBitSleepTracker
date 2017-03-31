@@ -8,4 +8,82 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".StartupActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Tracking"
+        android:id="@+id/loginBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="60dp"
+        android:paddingBottom="60dp">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignRight="@+id/sumModeBtn"
+            android:layout_alignEnd="@+id/sumModeBtn"
+            android:paddingTop="0dp">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Standard Mode"
+                android:id="@+id/sumModeBtn"
+                android:layout_centerVertical="true"
+                android:layout_alignRight="@+id/loginBtn"
+                android:layout_alignEnd="@+id/loginBtn"
+                android:textSize="20dp"
+                android:onClick="onRadioButtonClicked"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="214dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Your sleep data will be summed for the week subtracted from your expected sleep total, which is your sleep goal times the number of days sleep is calculated over.  For example, if you slept 7 hours, 8 hours, and 7 hours, and your sleep goal was 8 hours, it will say you are 2 hours sleep deprived: 8*3 - (7 + 8 + 7)."
+                android:id="@+id/textView2"
+                android:paddingStart="30dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bucket Mode"
+                android:id="@+id/bucketModeBtn"
+                android:layout_centerVertical="true"
+                android:layout_alignRight="@+id/loginBtn"
+                android:layout_alignEnd="@+id/loginBtn"
+                android:textSize="20dp"
+                android:onClick="onRadioButtonClicked" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Your sleep data will be summed over the week as if you are adding water to a bucket.  The total can never exceed the sleep goal total for that day, but you can make up lost sleep.  This means you will never have a negative number for the amount of sleep lost.  For example, if you slept 9 hours, then 7 hours, then 9 hours and your goal was 8 hours, the first day your amount of sleep lost is 0, the second day it is 1 (slept an hour less than your goal), and the day after it goes back to 0 (the extra hour when sleeping 9 hours is counted against your sleep lost)."
+                android:id="@+id/textView3"
+                android:paddingStart="30dp"
+                android:layout_gravity="center_horizontal" />
+
+        </RadioGroup>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Choose your tracking mode to login in to your tracker and get started!"
+        android:id="@+id/textView4"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

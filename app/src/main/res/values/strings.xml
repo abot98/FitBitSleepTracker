@@ -14,4 +14,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="preferencesKey">SleepTrackerPreferences</string>
+    <string name="firstTimeKey">isFirstTime</string>
+    <string name="sumMode">SumMode</string>
+    <string name="bucketMode">bucketMode</string>
+    <string name="trackingMode">trackingMode</string>
+    <string name="authTokenKey">authTokenKey</string>
+    <string name="userIdKey">userIdKey</string>
+    <string name="tokenTypeKey">tokenTypeKey</string>
 </resources>
