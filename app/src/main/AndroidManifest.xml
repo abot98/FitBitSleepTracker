@@ -6,8 +6,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".StartupActivity"
+            android:exported="true"
             android:label="FitBitSleepTracker">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SleepTrackerGUI">
+        <activity
+            android:name=".SleepTrackerGUI"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -35,7 +39,26 @@
                     android:scheme="myapplication" />
             </intent-filter>
         </activity>
-        <activity android:name=".HeartbeatBeta"></activity>
+        <activity android:name=".HeartbeatBeta" />
+
+        <receiver
+            android:name=".UnlockListenerStarter"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".ScreenUnlockListener"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".UnlockScreenReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>

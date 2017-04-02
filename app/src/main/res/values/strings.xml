@@ -24,4 +24,6 @@
     <string name="tokenTypeKey">tokenTypeKey</string>
     <string name="sleepGoalHoursKey">sleepGoalHoursKey</string>
     <string name="sleepGoalMinutesKey">sleepGoalMinutesKey</string>
+    <string name="received">received</string>
+    <string name="lastNotifiedDay">lastNotifiedDay</string>
 </resources>

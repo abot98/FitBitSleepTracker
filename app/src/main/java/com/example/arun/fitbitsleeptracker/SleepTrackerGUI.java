@@ -97,6 +97,9 @@ public class SleepTrackerGUI extends AppCompatActivity implements FitbitResponse
             goalInput.setCurrentMinute(sleepGoalMinutes);
         }
 
+        //Set up alarm
+        setupAlarm();
+
         goalInput.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 
             public void onTimeChanged(TimePicker view, int hour, int minute) {
@@ -128,6 +131,14 @@ public class SleepTrackerGUI extends AppCompatActivity implements FitbitResponse
                }
            }
         });
+    }
+
+    public void setupAlarm() {
+        if(ScreenUnlockListener.instance == null) {
+            Intent listener = new Intent(this, ScreenUnlockListener.class);
+            startService(listener);
+            Log.i("SERVICE", "STARTED");
+        }
     }
 
     public void getSleepData() {
@@ -232,5 +243,19 @@ public class SleepTrackerGUI extends AppCompatActivity implements FitbitResponse
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences.Editor editor = preferences.edit();
+
+        boolean received = preferences.getBoolean(getString(R.string.received), false);
+        Log.d("Test", received + "");
+
+        editor.putBoolean(getString(R.string.received), false);
+        editor.commit();
+
     }
 }
